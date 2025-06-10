@@ -1,0 +1,16 @@
+Create Maven Project
+
+mvn archetype:generate -DgroupId=com.example -DartifactId=HelloMaven -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+cd HelloMaven
+mvn package
+java -cp target/HelloMaven-1.0-SNAPSHOT.jar com.example.App
+
+
+
+Create a New Gradle Project
+
+mkdir HelloMavenGradle
+cd HelloMavenGradle
+gradle init --type java-application
+gradle build
+gradle run

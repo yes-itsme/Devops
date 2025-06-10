@@ -1,0 +1,10 @@
+mkdir HelloMavenGradle
+cd HelloMavenGradle
+gradle init --type java-application
+
+replace the build.gradle
+
+
+gradle build
+gradle run
+gradle hello

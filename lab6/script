@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+    steps {
+        git branch: 'main', url: 'https://github.com/Brunda6/Maven_Project.git'
+    }
+}
+
+
+        stage('Build') {
+            steps {
+                dir('HelloMaven') {
+                    sh 'mvn clean install'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                dir('HelloMaven') {
+                    // Optional: only if you have tests
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
+        }
+    }
+
+    post {
+        failure {
+            echo 'Build or tests failed.'
+        }
+    }
+}

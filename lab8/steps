@@ -1,0 +1,55 @@
+New Item   →   Name: HelloMaven-CI   →   Select: Freestyle Project   →   OK
+
+Source Code Management   →   Git   →   Add repo URL  (e.g., https://github.com/...)
+
+Build Step   →   Add   →   Invoke top-level Maven targets   →   Goals: clean package
+
+Post-build Action   →   Add   →   Archive the artifacts   →   Files to archive:  target/*.jar
+
+Post-build Action   →   Add   →   Execute shell   →   Shell command:  ansible-playbook -i /full/path/to/hosts.ini /full/path/to/deploy.yml
+
+
+
+Inventory File (hosts.ini):
+nano hosts.ini
+
+[local]
+localhost ansible_connection=local
+
+
+Playbook (deploy.yml):
+nano deploy.yml
+
+---
+- name: Deploy Maven Artifact
+  hosts: local
+  become: yes
+  tasks:
+    - name: Copy the artifact to the deployment directory
+      copy:
+        src: "/var/lib/jenkins/workspace/HelloMaven-CI/target/HelloMaven-1.0-SNAPSHOT.jar"
+        dest: "/opt/deployment/HelloMaven.jar"
+
+
+Make sure /opt/deployment exists or adjust dest: accordingly.
+
+
+
+Test the Pipeline:
+
+Go to Jenkins   →   Select Job   →   Click Build Now
+
+Check Console Output for:
+
+Git clone
+Maven build success
+Artifact archived
+Ansible playbook execution
+
+
+On terminal:
+
+ls -l /opt/deployment/
+
+
+You should see HelloMaven.jar

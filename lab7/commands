@@ -1,0 +1,42 @@
+Installing Ansible on Ubuntu
+
+  sudo apt update
+  sudo apt upgrade -y
+  sudo apt install ansible -y
+  ansible --version
+
+
+
+Creating an Ansible Inventory
+
+  nano hosts.ini
+  Add the following content to define the local host:
+[local]
+localhost ansible_connection=local
+
+
+Writing a Basic Ansible Playbook
+
+    nano setup.yml
+    Paste the following content:
+---
+- name: Basic Server Setup
+  hosts: local
+  become: yes  # Use sudo
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install curl
+      apt:
+        name: curl
+        state: present
+
+
+
+
+Run the Playbook
+
+ansible-playbook -i hosts.ini setup.yml --ask-become-pass
+

@@ -1,0 +1,18 @@
+Freestyle Project
+New Item   →   Name: Maven-CI   →   Select: Freestyle Project   →   OK
+
+Source Code Management   →   Git   →   Add repo URL  (e.g., https://github.com/...)
+
+Build Step   →   Add   →   Invoke top-level Maven targets   →   Goals: clean package
+
+Post-build Action   →   Add   →   Publish JUnit test result report   →   Path: **/target/surefire-reports/*.xml
+
+Save   →   Click Build Now   → Check Console Output   →   Look for BUILD SUCCESS
+
+
+
+
+Pipeline Project
+New Item   →   Name: Pipeline-CI   →   Select: Pipeline   →   OK
+
+In Pipeline Script, paste:
